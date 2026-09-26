@@ -1,19 +1,77 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
-  <title>Certificate QR Maker | Fountain Gate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#ffffff">
+  <title>School QR Code Maker</title>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
   <style>
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#082d32;color:#edf7f3;font:16px/1.5 system-ui,Segoe UI,sans-serif;display:grid;place-items:center;padding:22px}.box{width:min(580px,100%);background:#103b40;border:1px solid #ffffff24;border-radius:22px;padding:clamp(22px,5vw,42px);box-shadow:0 25px 75px #00171988}h1{font:500 2rem Georgia,serif;margin:0 0 8px}p{color:#b4cbc5;margin:0 0 24px}label{display:block;font-size:.86rem;font-weight:650;margin:0 0 7px}input{width:100%;padding:13px 14px;border:1px solid #ffffff38;border-radius:11px;background:#082d32;color:#fff;font:inherit}button{margin-top:12px;border:0;border-radius:999px;background:#e8c878;color:#183437;padding:12px 19px;font-weight:750;font-size:.95rem;cursor:pointer}.result{display:none;margin-top:26px;padding:20px;border-radius:16px;background:#fff;color:#132e31;text-align:center}.result img{width:min(300px,100%);height:auto;image-rendering:pixelated}.result p{color:#526866;margin:9px 0}.result a{color:#125960}.note{font-size:.82rem;margin-top:18px;color:#91b0aa}code{color:#e8c878}
+    :root{color-scheme:light;--blue:#2fc5f1;--ink:#1c2b38;--muted:#647586;--line:#e3edf2;--pale:#f2faff}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#f5fbfe 0,#fff 280px);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;padding:24px}.card{width:min(590px,100%);padding:clamp(23px,5vw,42px);background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 20px 65px rgba(25,76,105,.09)}.brand{display:flex;align-items:center;gap:14px;margin-bottom:25px}.brand img{width:64px;height:64px;object-fit:contain;border:1px solid var(--line);border-radius:15px;background:#fff}.brand small{display:block;color:var(--muted);font-size:.73rem;letter-spacing:.12em;text-transform:uppercase}.brand strong{font:600 1.02rem Georgia,serif}h1{font:600 clamp(1.65rem,5vw,2.1rem)/1.15 Georgia,"Times New Roman",serif;margin:0 0 9px}p{color:var(--muted);margin:0 0 22px}.field-label{display:block;margin-bottom:7px;font-size:.87rem;font-weight:700}input{width:100%;padding:13px 14px;border:1px solid #cedde5;border-radius:11px;background:#fff;color:var(--ink);font:inherit;outline:none}input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2fc5f128}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}button,.button{min-height:44px;border:1px solid var(--blue);border-radius:999px;background:var(--blue);color:#073848;padding:10px 18px;font:700 .92rem system-ui,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}button.secondary{background:#fff;color:#08799b;border-color:#b9e8f6}.button{background:#fff;color:#08799b;border-color:#b9e8f6}button:disabled{opacity:.5;cursor:not-allowed}.output{display:none;margin-top:27px;padding-top:24px;border-top:1px solid var(--line);text-align:center}.preview{width:min(340px,100%);aspect-ratio:1;margin:0 auto 13px;border:1px solid #dfe8ed;border-radius:14px;display:grid;place-items:center;overflow:hidden;background-color:#fff;background-image:linear-gradient(45deg,#edf2f5 25%,transparent 25%),linear-gradient(-45deg,#edf2f5 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#edf2f5 75%),linear-gradient(-45deg,transparent 75%,#edf2f5 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}.preview canvas,.preview svg{display:block;max-width:100%;height:auto!important}.hint{font-size:.82rem;margin:12px 0 0}.error{display:none;color:#a02c3b;font-size:.88rem;margin:12px 0 0}.footnote{border-top:1px solid var(--line);margin-top:24px;padding-top:17px;font-size:.8rem;color:#7d8b97}
+    @media(max-width:480px){body{padding:14px}.card{border-radius:17px}.brand img{width:56px;height:56px}}
   </style>
 </head>
-<body><main class="box"><h1>Make your certificate QR</h1><p>After publishing the school page, paste its full public HTTPS address below. The QR code will open that page when scanned.</p>
-  <form id="form"><label for="url">Live school page URL</label><input id="url" type="url" placeholder="https://your-site.free.nf/" required><button type="submit">Create QR code</button></form>
-  <section class="result" id="result"><img id="qr" alt="QR code for the school information page"><p>Scan test with your phone before printing.</p><a id="open" target="_blank" rel="noopener">Open linked page ↗</a><br><button id="download" type="button">Download QR as PNG</button></section>
-  <p class="note">The QR is generated as a PNG image. Use <b>Download QR as PNG</b> to save it to your device, then attach that PNG to certificates or other documents. Keep a clear white margin around it.</p>
+<body>
+  <main class="card">
+    <div class="brand"><img src="fga-logo.png" alt="Fountain Gate Academy logo"><span><small>Fountain Gate Academy</small><strong>Dodoma Pre &amp; Primary School</strong></span></div>
+    <h1>Create your school QR code</h1>
+    <p>Enter the public address of your school information page. Your QR code will include the school logo and download as a transparent PNG.</p>
+    <form id="form">
+      <label class="field-label" for="url">School page URL</label>
+      <input id="url" type="url" placeholder="https://your-school-site.example/" required>
+      <div class="actions"><button type="submit">Create QR code</button></div>
+      <p class="error" id="error" role="alert"></p>
+    </form>
+    <section class="output" id="output" aria-live="polite">
+      <div class="preview" id="preview"></div>
+      <p class="hint">The checker pattern shows the transparent areas; it will not appear in your PNG.</p>
+      <div class="actions" style="justify-content:center"><button class="secondary" id="download" type="button">Download transparent PNG</button><a class="button" id="open" target="_blank" rel="noopener">Open school page</a></div>
+    </section>
+    <p class="footnote">For reliable scanning, place the QR on a light background with clear space around it. The blue code may be hard to scan on blue or dark backgrounds.</p>
+  </main>
   <script>
-    const form=document.getElementById('form'),input=document.getElementById('url'),result=document.getElementById('result'),img=document.getElementById('qr'),open=document.getElementById('open'),download=document.getElementById('download');
-    form.addEventListener('submit',e=>{e.preventDefault();let u;try{u=new URL(input.value)}catch{alert('Enter a valid public website URL.');return}if(u.protocol!=='https:'&&u.protocol!=='http:'){alert('Enter a valid public website URL.');return}open.href=u.href;img.src='https://api.qrserver.com/v1/create-qr-code/?size=900x900&format=png&ecc=H&margin=4&data='+encodeURIComponent(u.href);result.style.display='block';result.scrollIntoView({behavior:'smooth',block:'nearest'})});
-    download.addEventListener('click',async()=>{if(!img.src)return;try{const response=await fetch(img.src);if(!response.ok)throw new Error('PNG download unavailable');const blob=await response.blob(),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='fountain-dodoma-school-qr.png';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch{window.open(img.src,'_blank','noopener');alert('The PNG opened in a new tab. Right-click or press and hold the image, then choose Save image.') }});
+    const form=document.getElementById('form');
+    const input=document.getElementById('url');
+    const output=document.getElementById('output');
+    const preview=document.getElementById('preview');
+    const download=document.getElementById('download');
+    const openLink=document.getElementById('open');
+    const error=document.getElementById('error');
+    let qrCode;
+
+    form.addEventListener('submit',event=>{
+      event.preventDefault();
+      error.style.display='none';
+      let destination;
+      try{destination=new URL(input.value)}catch{error.textContent='Enter a valid public website address.';error.style.display='block';return}
+      if(!['https:','http:'].includes(destination.protocol)){error.textContent='Use a public website address starting with https:// or http://.';error.style.display='block';return}
+      if(!window.QRCodeStyling){error.textContent='The QR generator could not load. Check your internet connection and reload this page.';error.style.display='block';return}
+      openLink.href=destination.href;
+      preview.replaceChildren();
+      qrCode=new QRCodeStyling({
+        width:1000,
+        height:1000,
+        type:'canvas',
+        data:destination.href,
+        image:'fga-logo.png',
+        margin:24,
+        qrOptions:{errorCorrectionLevel:'H'},
+        imageOptions:{hideBackgroundDots:true,imageSize:0.22,margin:5,crossOrigin:'anonymous'},
+        dotsOptions:{color:'#2fc5f1',type:'rounded'},
+        cornersSquareOptions:{color:'#2fc5f1',type:'extra-rounded'},
+        cornersDotOptions:{color:'#2fc5f1',type:'dot'},
+        backgroundOptions:{color:'transparent'}
+      });
+      qrCode.append(preview);
+      output.style.display='block';
+      output.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+
+    download.addEventListener('click',()=>{
+      if(qrCode)qrCode.download({name:'fountain-dodoma-school-qr',extension:'png'});
+    });
   </script>
-</main></body></html>
+</body>
+</html>
