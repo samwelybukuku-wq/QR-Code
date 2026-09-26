@@ -29,3 +29,7 @@ URL you enter to that service to generate the QR PNG. Do not enter private data.
 
 IMAGE
 - Upload fga-adv-info.jpg into the same htdocs folder alongside index.html. The page references this image by filename.
+
+QR MAKER LOGO
+- Upload fga-logo.png into htdocs next to qr-maker.html. The QR maker needs this image for its branding and embedded logo.
+- QR codes export as transparent PNGs using #2fc5f1 modules and the FGA logo. Scan-test each downloaded code on a light background before printing.
